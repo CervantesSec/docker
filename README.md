@@ -33,6 +33,8 @@ docker-compose -p Cervantes up -d
 
 3. After this, open your browser at http://localhost
 
+4. Default User is admin@cervantes.local - Admin123.
+
 ## How to contribute
 
 Here are some things you could do to become a contributor:
