@@ -41,8 +41,16 @@ git clone https://github.com/CervantesSec/docker.git
 
 2. First you need to start your docker containers:
 
+Production
+
 ```sh
-docker-compose -p Cervantes up -d
+docker-compose -p cervantes -f docker-compose.yml up -d
+```
+
+Development
+
+```sh
+docker-compose -p cervantes -f docker-compose-dev.yml up -d
 ```
 
 3. After this, open your browser at http://localhost
