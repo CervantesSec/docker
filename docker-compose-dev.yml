@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+    cervantes-db:
+        container_name: cervantes-db
+        networks:
+            - cervantes
+        image: postgres:latest
+        restart: unless-stopped
+        expose:
+            - "5432"
+        environment:
+            POSTGRES_DATABASE: cervantes
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: EnUnLugarDeLaMancha1547 
+
+    cervantes-app:
+        container_name: cervantes-app
+        networks:
+            - cervantes
+        image: mesq/cervantes:dev
+        depends_on: 
+            - cervantes-db
+        restart: unless-stopped
+        expose:
+            - "80"
+            - "443"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+        volumes:
+            - ./appsettings.json:/app/appsettings.json
+
+    cervantes-nginx:
+        container_name: cervantes-nginx
+        networks:
+            - cervantes
+        image: nginx:latest
+        depends_on:
+            - cervantes-app
+        restart: always
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+    
+networks:
+    cervantes:
+        driver:  bridge
