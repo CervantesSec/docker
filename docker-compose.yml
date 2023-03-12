@@ -25,7 +25,7 @@ services:
             - "80"
             - "443"
         environment:
-            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_ENVIRONMENT=Production
         volumes:
             - ./appsettings.json:/app/appsettings.json
 
