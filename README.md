@@ -71,3 +71,8 @@ Before you jump to make any changes make sure you have read the [contributing gu
 ## How to report bugs
 
 If you have bugs to report please use the [issues](https://github.com/CervantesSec/cervantes/issues) tab on Github to submit the details.
+
+## Contributors
+
+[@Lekow](https://github.com/lekow)
+
