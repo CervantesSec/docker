@@ -4,45 +4,36 @@ services:
         container_name: cervantes-db
         networks:
             - cervantes
-        image: postgres:latest
+        image: mesq/cervantes-postgres:dev
         restart: unless-stopped
         expose:
             - "5432"
         environment:
-            POSTGRES_DATABASE: cervantes
+            POSTGRES_DB: cervantes
             POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: EnUnLugarDeLaMancha1547 
-
+            POSTGRES_PASSWORD: EnUnLugarDeLaMancha1547
+    
     cervantes-app:
         container_name: cervantes-app
         networks:
             - cervantes
-        image: mesq/cervantes:dev
-        depends_on: 
+        image: mesq/cervantes:latest-dev
+        depends_on:
             - cervantes-db
         restart: unless-stopped
-        expose:
-            - "80"
-            - "443"
+        ports:
+            - "443:8081"
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_DETAILEDERRORS=1
+            - ASPNETCORE_URLS=https://+:443
+            - ASPNETCORE_HTTPS_PORT=443
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=CervantesCert
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cervantes.pfx
         volumes:
             - ./appsettings.json:/app/appsettings.json
+            - ./https:/https:ro
 
-    cervantes-nginx:
-        container_name: cervantes-nginx
-        networks:
-            - cervantes
-        image: nginx:latest
-        depends_on:
-            - cervantes-app
-        restart: always
-        ports:
-            - "80:80"
-            - "443:443"
-        volumes:
-            - ./nginx.conf:/etc/nginx/nginx.conf
-    
 networks:
     cervantes:
         driver:  bridge

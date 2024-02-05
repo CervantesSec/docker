@@ -31,31 +31,33 @@ Cervantes is an opensource collaborative platform for pentesters or red teams wh
 - Docker
 - Docker compose
 
-## How to run it locally with Docker compose 
+## How to run it locally with Docker compose
 
-1. First you need to clone this repository
+* First you need to clone this repository
 
 ```sh
 git clone https://github.com/CervantesSec/docker.git
 ```
 
-2. First you need to start your docker containers:
-
-Production
+* After that you need to start your docker containers:
 
 ```sh
 docker-compose -p cervantes -f docker-compose.yml up -d
 ```
 
-Development
+* After this, open your browser at http://localhost or https://localhost and you will see the Cervantes login page.
 
-```sh
-docker-compose -p cervantes -f docker-compose-dev.yml up -d
-```
+### Default User and Password
 
-3. After this, open your browser at http://localhost
+When you first launch the Cervantes application, a default user is created for you. The default username is `admin@cervantes.local`.
 
-4. Default User is admin@cervantes.local - Admin123.
+The password for this user is generated randomly during the creation of the application container and the first launch of the application. This means that the password is unique for each instance of the application and provides an additional layer of security.
+
+<img src="https://raw.githubusercontent.com/CervantesSec/.github/main/profile/password-generation.png"  width="800" height="500">
+
+Please note that it's important to change the default password as soon as possible to ensure the security of your application. You can do this by logging in with the default user and navigating to the user settings page.
+
+Remember, the security of your application is paramount. Always use strong, unique passwords and change them regularly.
 
 ## How to contribute
 
