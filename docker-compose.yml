@@ -1,4 +1,3 @@
-version: '3.8'
 services:
     cervantes-db:
         container_name: cervantes-db
@@ -6,12 +5,18 @@ services:
             - cervantes
         image: mesq/cervantes-postgres:latest
         restart: unless-stopped
-        expose:
-            - "5432"
         environment:
             POSTGRES_DB: cervantes
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: EnUnLugarDeLaMancha1547
+        volumes:
+            - cervantes_postgres:/var/lib/postgresql/data
+        healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres -d cervantes"]
+          interval: 5s
+          timeout: 5s
+          retries: 5
+          start_period: 10s
     
     cervantes-app:
         container_name: cervantes-app
@@ -19,7 +24,8 @@ services:
             - cervantes
         image: mesq/cervantes:latest
         depends_on:
-            - cervantes-db
+          cervantes-db:
+            condition: service_healthy
         restart: unless-stopped
         ports:
             - "443:8081"
@@ -36,3 +42,6 @@ services:
 networks:
     cervantes:
         driver:  bridge
+
+volumes:
+    cervantes_postgres:
